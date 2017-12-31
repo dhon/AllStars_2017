@@ -5,13 +5,13 @@ angular.module('app.routes', ['ui.router', 'app.controllers', 'app.services'])
 
         .state('home', {
             url: '/',
-            templateUrl: 'home.html',
+            templateUrl: '/Mafia_Stats_2017/home.html',
             controller: 'homeCtrl'
         })
 
         .state('kills', {
             url: '/kills/:id',
-            templateUrl: 'kills.html',
+            templateUrl: '/Mafia_Stats_2017/kills.html',
             controller: 'killsCtrl'
         })
 
