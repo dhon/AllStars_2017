@@ -13,7 +13,7 @@ angular.module('app.services', [])
         for(var i = 0; i < 100; i++){
             var ourRequest = new XMLHttpRequest();
             var num = i < 9 ? '0' + (i+1) : (i+1);
-            var URL = 'http://127.0.0.1:4000/data/' + num + '.json'
+            var URL = 'https://dhon.github.io/Mafia_Stats_2017/data/' + num + '.json'
             ourRequest.open('GET', URL, false);
             ourRequest.onload = function(){
                 data[i] = JSON.parse(ourRequest.responseText);
