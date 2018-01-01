@@ -413,8 +413,11 @@ angular.module('app.services', [])
                 for(var a = 0; a < stats.length; a++){
                     if(data[i].mafia[j] == stats[a].name){
                         for(var b = 0; b < stats[a].n0_kills.length; b++){
-                            if(data[i].n0[0] == stats[a].n0_kills[b].name || data[i].n0[1] == stats[a].n0_kills[b].name)
+                            if(data[i].n0[0] == stats[a].n0_kills[b].name || data[i].n0[1] == stats[a].n0_kills[b].name){
+                                if(data[i].n0[0] == stats[a].n0_kills[b].name && data[i].n0[1] == stats[a].n0_kills[b].name)
+                                    stats[a].n0_kills[b].killed++;
                                 stats[a].n0_kills[b].killed++;
+                            }
                             if(data[i].cop == stats[a].n0_kills[b].name)
                                 stats[a].n0_kills[b].total++;
                             if(data[i].medic == stats[a].n0_kills[b].name)
