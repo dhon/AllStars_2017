@@ -35,6 +35,7 @@ angular.module('app.services', [])
                 }
                 if(!found){
                     addPlayer(data[i].mafia[j]);
+                    getTargets(stats.length-1, i);
                 }
             }
             for(var j = 0; j < data[i].vanilla_town.length; j++){
