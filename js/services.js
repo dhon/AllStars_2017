@@ -114,7 +114,6 @@ angular.module('app.services', [])
             addTarget(data[i].cop, x, i);
         }
         var medic = false;
-        kill = 0;
         for(var a = 0; a < stats[x].n0_kills.length; a++){
             if(stats[x].n0_kills[a].name == data[i].medic){
                 medic = true;
