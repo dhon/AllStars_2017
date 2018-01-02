@@ -511,7 +511,7 @@ angular.module('app.services', [])
     };
 
     function byPKilled(a,b){
-        return b.pKilled - a.pKilled || a.total - b.total;
+        return b.pKilled - a.pKilled || b.killed - a.killed || a.total - b.total;
     };
 
     function getData(){
