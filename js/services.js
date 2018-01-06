@@ -495,7 +495,7 @@ angular.module('app.services', [])
             for(var j = 0; j < stats[i].n0_kills.length; j++){
                 var killed = stats[i].n0_kills[j].killed;
                 var total = stats[i].n0_kills[j].total;
-                stats[i].n0_kills[j].pKilled = ((killed / total) * 100).toFixed() + ' %';
+                stats[i].n0_kills[j].pKilled = ((killed / total) * 100).toFixed();
             }
         }
     };
@@ -537,8 +537,6 @@ angular.module('app.services', [])
         getPMafiaWin();
         getPKilled();
         stats.sort(byPlayedName);
-        for(var i = 0; i < stats.length; i++)
-            stats[i].n0_kills.sort(byPKilled);
         return stats;
     };
 
@@ -565,6 +563,8 @@ angular.module('app.services', [])
     };
 
     function getKills(id){
+        for(var i = 0; i < stats.length; i++)
+            stats[i].n0_kills.sort(byPKilled);
         for(var i = 0; i < stats.length; i++)
             if(id == stats[i].name)
                 return stats[i].n0_kills;
