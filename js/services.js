@@ -568,7 +568,7 @@ angular.module('app.services', [])
         for(var i = 0; i < stats.length; i++)
             if(id == stats[i].name)
                 return stats[i].n0_kills;
-        return stats[0].n0_kills;
+        return 0;
     };
 
     return{
