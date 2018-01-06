@@ -1,12 +1,14 @@
 angular.module('app.services', [])
 .factory('services', [function(){
 
-    var stats = [];
     var data = [];
+    var stats = [];
+    var gStats = {};
 
     function resetData(){
-        stats = [];
         data = [];
+        stats = [];
+        gStats = {g1_town:0, g1_mafia:0, g2_town:0, g2_mafia:0, pG:null, pG1:null, pG2:null};
     }
 
     function getJSON(){
@@ -443,7 +445,7 @@ angular.module('app.services', [])
             var mafia = stats[i].win_mafia + stats[i].loss_mafia;
             var town = stats[i].played - mafia;
             var total = mafia + town;
-            stats[i].pTown = ((town / total) * 100).toFixed(2);
+            stats[i].pTown = ((town / total) * 100).toFixed() + ' %';
         }
     };
 
@@ -451,7 +453,7 @@ angular.module('app.services', [])
         for(var i = 0; i < stats.length; i++){
             var pr = stats[i].roll_cop + stats[i].roll_medic + stats[i].roll_vigi;
             var total = stats[i].played;
-            stats[i].pPR = ((pr / total) * 100).toFixed(2);
+            stats[i].pPR = ((pr / total) * 100).toFixed() + ' %';
         }
     };
 
@@ -461,7 +463,7 @@ angular.module('app.services', [])
             var loss = stats[i].loss_town + stats[i].loss_mafia;
             var total = win + loss;
             if(total != 0){
-                stats[i].pWin = ((win / total) * 100).toFixed(2);
+                stats[i].pWin = ((win / total) * 100).toFixed() + ' %';
             }
         }
     };
@@ -472,7 +474,7 @@ angular.module('app.services', [])
             var loss = stats[i].loss_town;
             var total = win + loss;
             if(total != 0){
-                stats[i].pTownWin = ((win / total) * 100).toFixed(2);
+                stats[i].pTownWin = ((win / total) * 100).toFixed() + ' %';
             }
         }
     };
@@ -483,7 +485,7 @@ angular.module('app.services', [])
             var loss = stats[i].loss_mafia;
             var total = win + loss;
             if(total != 0){
-                stats[i].pMafiaWin = ((win / total) * 100).toFixed(2);
+                stats[i].pMafiaWin = ((win / total) * 100).toFixed() + ' %';
             }
         }
     };
@@ -493,7 +495,7 @@ angular.module('app.services', [])
             for(var j = 0; j < stats[i].n0_kills.length; j++){
                 var killed = stats[i].n0_kills[j].killed;
                 var total = stats[i].n0_kills[j].total;
-                stats[i].n0_kills[j].pKilled = ((killed / total) * 100).toFixed(2);
+                stats[i].n0_kills[j].pKilled = ((killed / total) * 100).toFixed() + ' %';
             }
         }
     };
@@ -540,15 +542,37 @@ angular.module('app.services', [])
         return stats;
     };
 
+    function getGData(){
+        for(var i = 0; i < data.length; i++){
+            if(data[i].winner == 'Town')
+                if(i % 2 == 0)
+                    gStats.g1_town++;
+                else
+                    gStats.g2_town++;
+            if(data[i].winner == 'Mafia')
+                if(i % 2 == 0)
+                    gStats.g1_mafia++;
+                else
+                    gStats.g2_mafia++;
+        }
+        var g1 = gStats.g1_town + gStats.g1_mafia;
+        var g2 = gStats.g2_town + gStats.g2_mafia;
+        var g = g1 + g2;
+        gStats.pG1 = ((gStats.g1_town / g1) * 100).toFixed() + ' %';
+        gStats.pG2 = ((gStats.g2_town / g2) * 100).toFixed() + ' %';
+        gStats.pG = (((gStats.g1_town + gStats.g2_town) / g) * 100).toFixed() + ' %';
+        return gStats;
+    };
+
     function getKills(id){
         for(var i = 0; i < stats.length; i++)
             if(id == stats[i].name)
                 return stats[i].n0_kills;
         return stats[0].n0_kills;
-    }
+    };
 
     return{
-        getData, getKills
+        getData, getGData, getKills
     };
 
 }]);
