@@ -500,6 +500,82 @@ angular.module('app.services', [])
         }
     };
 
+    function validateNames(){
+        for(var i = 0; i < data.length; i++){
+            var players = [];
+            players.push(data[i].cop);
+            players.push(data[i].medic);
+            players.push(data[i].vigilante);
+            for(var j = 0; j < data[i].vanilla_town.length; j++)
+                players.push(data[i].vanilla_town[j]);
+            for(var j = 0; j < data[i].mafia.length; j++)
+                players.push(data[i].mafia[j]);
+            for(var x = 0; x < data[i].n0.length; x++){
+                var found = false;
+                for(var a = 0; a < players.length; a++)
+                    if(players[a] == data[i].n0[x]){
+                        found = true;
+                        break;
+                    }
+                if(!found)
+                    console.log('NAME ERROR: Game ' + (i+1) + ' n0 [' + x + ']');
+            }
+            var found_save = false;
+            for(var a = 0; a < players.length; a++)
+                if(players[a] == data[i].n0_save || data[i].n0_save == ''){
+                    found_save = true;
+                    break;
+                }
+            if(!found_save)
+                console.log('NAME ERROR: Game ' + (i+1) + ' n0_save');
+            var found_shot = false;
+            for(var a = 0; a < players.length; a++)
+                if(players[a] == data[i].shot || data[i].shot == ''){
+                    found_shot = true;
+                    break;
+                }
+            if(!found_shot)
+                console.log('NAME ERROR: Game ' + (i+1) + ' shot');
+            for(var x = 0; x < data[i].lynched.length; x++){
+                var found = false;
+                for(var a = 0; a < players.length; a++){
+                    if(players[a] == data[i].lynched[x]){
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                    console.log('NAME ERROR: Game ' + (i+1) + ' lynched [' + x + ']');
+            }
+            if(data[i].f3_win != null){
+                for(var x = 0; x < data[i].f3_win.length; x++){
+                    var found = false;
+                    for(var a = 0; a < players.length; a++){
+                        if(players[a] == data[i].f3_win[x]){
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found)
+                        console.log('NAME ERROR: Game ' + (i+1) + ' f3_win [' + x + ']');
+                }
+            }
+            if(data[i].f3_loss != null){
+                for(var x = 0; x < data[i].f3_loss.length; x++){
+                    var found = false;
+                    for(var a = 0; a < players.length; a++){
+                        if(players[a] == data[i].f3_loss[x]){
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found)
+                        console.log('NAME ERROR: Game ' + (i+1) + ' f3_loss [' + x + ']');
+                }
+            }
+        }
+    };
+
     function byPlayedName(a,b){
         if(a.played > b.played)
             return -1;
@@ -536,6 +612,7 @@ angular.module('app.services', [])
         getPTownWin();
         getPMafiaWin();
         getPKilled();
+        validateNames();
         stats.sort(byPlayedName);
         return stats;
     };
